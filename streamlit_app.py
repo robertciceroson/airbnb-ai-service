@@ -330,6 +330,8 @@ with tab2:
         st.session_state.conversation_id = str(uuid.uuid4())
     if "chat_history" not in st.session_state:
         st.session_state.chat_history = []   # [{"role": "user"|"assistant", "content": ..., "tool": ...}]
+    if "chat_input_key" not in st.session_state:
+        st.session_state.chat_input_key = 0
 
     TOOL_ICONS = {
         "price_lookup":   "💰 Price tool",
@@ -364,7 +366,7 @@ with tab2:
             "Your message",
             placeholder="e.g. What's the cancellation policy if I cancel 2 days before check-in?",
             label_visibility="collapsed",
-            key="chat_input",
+            key=f"chat_input_{st.session_state.chat_input_key}",
         )
     with btn_col:
         send = st.button("Send ➤", use_container_width=True)
@@ -393,8 +395,8 @@ with tab2:
             "role": "user",
             "content": user_input.strip(),
         })
-        # Clear the input box immediately so the user can't double-send
-        st.session_state["chat_input"] = ""
+        # Increment key to force a fresh (empty) text_input on rerun
+        st.session_state.chat_input_key += 1
 
         # Call API
         with st.spinner("Agent thinking…"):
