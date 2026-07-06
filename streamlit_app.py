@@ -145,6 +145,7 @@ def api_chat(message: str, conversation_id: str, history: list) -> dict | None:
     Calls /chat/stream (SSE) so Render's 30-second timeout is never hit.
     The server sends keepalive pings every 3 s; we ignore them and wait
     for the 'result' or 'error' event.
+    Errors are stored in session_state so they survive st.rerun().
     """
     payload = {
         "message": message,
@@ -178,13 +179,13 @@ def api_chat(message: str, conversation_id: str, history: list) -> dict | None:
                         "sources":   data.get("sources", []),
                     }
                 elif data.get("type") == "error":
-                    st.error(f"Agent error: {data.get('detail', 'Unknown error')}")
+                    st.session_state.chat_error = f"Agent error: {data.get('detail', 'Unknown error')}"
                     return None
     except httpx.ConnectError:
-        st.error("⚠️ Cannot reach the FastAPI backend. Run: `uvicorn app.main:app --reload --port 8000`")
+        st.session_state.chat_error = "⚠️ Cannot reach the FastAPI backend."
         return None
     except Exception as e:
-        st.error(f"API error: {e}")
+        st.session_state.chat_error = f"API error: {e}"
         return None
 
 
@@ -332,6 +333,8 @@ with tab2:
         st.session_state.chat_history = []   # [{"role": "user"|"assistant", "content": ..., "tool": ...}]
     if "chat_input_key" not in st.session_state:
         st.session_state.chat_input_key = 0
+    if "chat_error" not in st.session_state:
+        st.session_state.chat_error = ""
 
     TOOL_ICONS = {
         "price_lookup":   "💰 Price tool",
@@ -339,6 +342,10 @@ with tab2:
         "human_handoff":  "👤 Human handoff",
         "":               "",
     }
+
+    # ── Show persisted error (survives st.rerun) ──────────────────────────────
+    if st.session_state.chat_error:
+        st.error(st.session_state.chat_error)
 
     # ── Chat display ──────────────────────────────────────────────────────────
     chat_html = '<div class="chat-container" id="chat-box">'
@@ -384,6 +391,8 @@ with tab2:
 
     # ── Send logic ────────────────────────────────────────────────────────────
     if send and user_input.strip():
+        st.session_state.chat_error = ""  # clear previous error
+
         # Build history for API (exclude tool metadata)
         api_history = [
             {"role": m["role"], "content": m["content"]}
@@ -415,12 +424,13 @@ with tab2:
 
         st.rerun()
 
-    # ── Controls ──────────────────────────────────────────────────────────────
+    # ── Controls ───────────────────────────────────────────────────────────────────────────────────
     ctrl_col1, ctrl_col2, _ = st.columns([1, 1, 4])
     with ctrl_col1:
         if st.button("🗑️ Clear chat", use_container_width=True):
             st.session_state.chat_history = []
             st.session_state.conversation_id = str(uuid.uuid4())
+            st.session_state.chat_error = ""
             st.rerun()
     with ctrl_col2:
         conv_id_short = st.session_state.conversation_id[:8]
@@ -428,6 +438,7 @@ with tab2:
 
     st.divider()
     st.caption(
-        "Powered by LangGraph · Llama 3.3 70B (Groq) · FAISS RAG · XGBoost · FastAPI  |  "
+        "Powered by LangGraph · Llama 3.3 70B (Groq) · BM25 RAG · XGBoost · FastAPI  |  "
         "[GitHub](https://github.com/robertciceroson/airbnb-ai-service)"
     )
+
