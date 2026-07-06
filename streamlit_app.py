@@ -393,6 +393,8 @@ with tab2:
             "role": "user",
             "content": user_input.strip(),
         })
+        # Clear the input box immediately so the user can't double-send
+        st.session_state["chat_input"] = ""
 
         # Call API
         with st.spinner("Agent thinking…"):
