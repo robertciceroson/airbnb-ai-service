@@ -12,10 +12,12 @@ Then launch this app:
 """
 import os
 import json
+import pathlib
 import streamlit as st
 import datetime
 import uuid
 import httpx
+from langchain_core.messages import HumanMessage, AIMessage, SystemMessage
 
 # ── Page config ───────────────────────────────────────────────────────────────
 st.set_page_config(
@@ -27,8 +29,9 @@ st.set_page_config(
 # API_BASE: reads from env var on Streamlit Cloud, falls back to localhost for local dev.
 # Set this in Streamlit Cloud → App Settings → Secrets as:
 #   API_BASE_URL = "https://your-service.onrender.com"
-API_BASE = os.getenv("API_BASE_URL", st.secrets.get("API_BASE_URL", "http://localhost:8000")
-                     if hasattr(st, "secrets") else "http://localhost:8000")
+_secrets = st.secrets if hasattr(st, "secrets") else {}
+API_BASE    = os.getenv("API_BASE_URL",  _secrets.get("API_BASE_URL",  "http://localhost:8000"))
+GROQ_API_KEY = os.getenv("GROQ_API_KEY", _secrets.get("GROQ_API_KEY", ""))
 
 # ── Shared CSS ────────────────────────────────────────────────────────────────
 st.markdown("""
@@ -140,52 +143,163 @@ def api_predict(payload: dict) -> dict | None:
         return None
 
 
-def api_chat(message: str, conversation_id: str, history: list) -> dict | None:
+@st.cache_resource(show_spinner="Loading AI agent…")
+def load_agent():
     """
-    Calls /chat/stream (SSE) so Render's 30-second timeout is never hit.
-    The server sends keepalive pings every 3 s; we ignore them and wait
-    for the 'result' or 'error' event.
-    Errors are stored in session_state so they survive st.rerun().
+    Build the LangGraph agent once and cache it for the lifetime of the
+    Streamlit Cloud instance.  Runs entirely inside Streamlit — no Render
+    timeout constraints.  Price lookups call the Render /predict endpoint;
+    policy search uses a local BM25 retriever over the bundled policy docs.
     """
-    payload = {
-        "message": message,
-        "conversation_id": conversation_id,
-        "history": history,
-    }
+    from langchain_groq import ChatGroq
+    from langchain_community.retrievers import BM25Retriever
+    from langchain_community.document_loaders import DirectoryLoader, TextLoader
+    from langchain_text_splitters import RecursiveCharacterTextSplitter
+    from langchain_core.tools import tool
+    from langgraph.graph import StateGraph, END
+    from langgraph.prebuilt import ToolNode
+    from typing import Annotated, Sequence
+    from typing_extensions import TypedDict
+    from langgraph.graph.message import add_messages
+
+    # ── BM25 retriever from bundled policy docs ───────────────────────────────
+    policies_dir = pathlib.Path(__file__).parent / "data" / "policies"
+    loader = DirectoryLoader(
+        str(policies_dir), glob="**/*.txt",
+        loader_cls=TextLoader, loader_kwargs={"encoding": "utf-8"},
+    )
+    chunks = RecursiveCharacterTextSplitter(
+        chunk_size=500, chunk_overlap=50
+    ).split_documents(loader.load())
+    retriever = BM25Retriever.from_documents(chunks)
+    retriever.k = 4
+
+    # ── Tools ─────────────────────────────────────────────────────────────────
+    @tool
+    def policy_search(query: str) -> str:
+        """Search Airbnb policies: cancellations, refunds, check-in, disputes, fees."""
+        docs = retriever.invoke(query)
+        if not docs:
+            return "No relevant policy information found."
+        context = "\n\n".join(d.page_content for d in docs)
+        sources = list({
+            pathlib.Path(d.metadata.get("source", "")).name
+            for d in docs if d.metadata.get("source")
+        })
+        return context + (f"\n\n[Sources: {', '.join(sources)}]" if sources else "")
+
+    @tool
+    def price_lookup(
+        borough: str,
+        neighbourhood: str,
+        room_type: str = "Entire home/apt",
+        checkin_month: int = None,
+    ) -> str:
+        """Look up the predicted nightly Airbnb price for a NYC listing."""
+        try:
+            payload = {
+                "borough": borough,
+                "neighbourhood": neighbourhood,
+                "room_type": room_type,
+            }
+            if checkin_month:
+                payload["checkin_month"] = checkin_month
+            r = httpx.post(f"{API_BASE}/predict", json=payload, timeout=15)
+            r.raise_for_status()
+            d = r.json()
+            return (
+                f"Estimated price for {room_type} in {neighbourhood}, {borough}: "
+                f"${d['adjusted_price']:.0f}/night. Season: {d['season_label']}."
+            )
+        except Exception as e:
+            return f"Could not retrieve price estimate: {e}"
+
+    @tool
+    def human_handoff(reason: str) -> str:
+        """Escalate to a human Airbnb support agent."""
+        return (
+            f"Connecting you to a human agent. Reason: {reason}. "
+            "Please contact Airbnb support directly at airbnb.com/help."
+        )
+
+    tools = [policy_search, price_lookup, human_handoff]
+
+    # ── LLM + graph ───────────────────────────────────────────────────────────
+    llm = ChatGroq(
+        api_key=GROQ_API_KEY,
+        model="llama-3.3-70b-versatile",
+        temperature=0.2,
+    ).bind_tools(tools)
+
+    SYSTEM = (
+        "You are an Airbnb AI Assistant — helpful, concise, and friendly.\n"
+        "Tools available:\n"
+        "1. price_lookup  — nightly rate / cost questions for NYC listings.\n"
+        "2. policy_search — cancellations, refunds, check-in/out, rules, disputes.\n"
+        "3. human_handoff — escalate when frustrated or unable to help.\n"
+        "Always use a tool for price or policy questions. Never guess."
+    )
+
+    class AgentState(TypedDict):
+        messages: Annotated[Sequence[HumanMessage], add_messages]
+        tool_used: str
+
+    tool_node = ToolNode(tools)
+
+    def agent_node(state):
+        msgs = list(state["messages"])
+        if not any(isinstance(m, SystemMessage) for m in msgs):
+            msgs = [SystemMessage(content=SYSTEM)] + msgs
+        response = llm.invoke(msgs)
+        return {"messages": [response], "tool_used": state.get("tool_used", "")}
+
+    def should_continue(state):
+        last = state["messages"][-1]
+        return "tools" if (hasattr(last, "tool_calls") and last.tool_calls) else END
+
+    def track_tool(state):
+        last_ai = next(
+            (m for m in reversed(state["messages"]) if isinstance(m, AIMessage)), None
+        )
+        name = ""
+        if last_ai and hasattr(last_ai, "tool_calls") and last_ai.tool_calls:
+            name = last_ai.tool_calls[0].get("name", "")
+        return {"messages": state["messages"], "tool_used": name}
+
+    g = StateGraph(AgentState)
+    g.add_node("agent",      agent_node)
+    g.add_node("tools",      tool_node)
+    g.add_node("track_tool", track_tool)
+    g.set_entry_point("agent")
+    g.add_conditional_edges("agent", should_continue, {"tools": "tools", END: END})
+    g.add_edge("tools",      "track_tool")
+    g.add_edge("track_tool", "agent")
+    return g.compile()
+
+
+def run_agent_chat(message: str, history: list) -> dict | None:
+    """
+    Invoke the cached LangGraph agent directly inside Streamlit.
+    No Render API call — no 30-second timeout.
+    """
     try:
-        with httpx.stream(
-            "POST",
-            f"{API_BASE}/chat/stream",
-            json=payload,
-            timeout=120,        # 2-minute client-side safety net
-        ) as response:
-            response.raise_for_status()
-            for line in response.iter_lines():
-                if not line or not line.startswith("data: "):
-                    continue
-                data_str = line[6:]
-                if data_str == "[DONE]":
-                    break
-                try:
-                    data = json.loads(data_str)
-                except json.JSONDecodeError:
-                    continue
-                if data.get("type") == "ping":
-                    continue            # keepalive — discard
-                elif data.get("type") == "result":
-                    return {
-                        "reply":     data["reply"],
-                        "tool_used": data.get("tool_used", ""),
-                        "sources":   data.get("sources", []),
-                    }
-                elif data.get("type") == "error":
-                    st.session_state.chat_error = f"Agent error: {data.get('detail', 'Unknown error')}"
-                    return None
-    except httpx.ConnectError:
-        st.session_state.chat_error = "⚠️ Cannot reach the FastAPI backend."
-        return None
+        agent = load_agent()
+        msgs = []
+        for m in history[-20:]:
+            msgs.append(
+                HumanMessage(content=m["content"])
+                if m["role"] == "user"
+                else AIMessage(content=m["content"])
+            )
+        msgs.append(HumanMessage(content=message))
+
+        result   = agent.invoke({"messages": msgs, "tool_used": ""})
+        last_msg = result["messages"][-1]
+        reply    = last_msg.content if hasattr(last_msg, "content") else str(last_msg)
+        tool     = result.get("tool_used", "")
+        return {"reply": reply, "tool_used": tool, "sources": []}
     except Exception as e:
-        st.session_state.chat_error = f"API error: {e}"
+        st.session_state.chat_error = f"Agent error: {e}"
         return None
 
 
@@ -407,11 +521,10 @@ with tab2:
         # Increment key to force a fresh (empty) text_input on rerun
         st.session_state.chat_input_key += 1
 
-        # Call API
+        # Run agent directly inside Streamlit (no Render timeout)
         with st.spinner("Agent thinking…"):
-            response = api_chat(
+            response = run_agent_chat(
                 message=user_input.strip(),
-                conversation_id=st.session_state.conversation_id,
                 history=api_history,
             )
 
