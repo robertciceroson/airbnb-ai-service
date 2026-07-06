@@ -46,6 +46,29 @@ st.markdown("""
     div[data-testid="stDateInput"] label {
         color: #155724 !important; font-weight: 600 !important; }
 
+    /* ── Tab styling ── */
+    div[data-testid="stTabs"] button {
+        font-size: 1.05rem !important;
+        font-weight: 600 !important;
+        padding: 10px 24px !important;
+        border-radius: 6px 6px 0 0 !important;
+        color: #555 !important;
+        background-color: #F0F0F0 !important;
+        border: 1px solid #ddd !important;
+        border-bottom: none !important;
+        margin-right: 4px !important;
+    }
+    div[data-testid="stTabs"] button[aria-selected="true"] {
+        background-color: #D4EDDA !important;
+        color: #155724 !important;
+        border-color: #28A745 !important;
+        border-bottom: 2px solid #28A745 !important;
+    }
+    div[data-testid="stTabs"] button:hover {
+        background-color: #D4EDDA !important;
+        color: #155724 !important;
+    }
+
     /* Green Predict button */
     div[data-testid="stButton"] button {
         background-color: #D4EDDA !important; border: 1px solid #28A745 !important;
