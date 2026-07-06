@@ -1,0 +1,105 @@
+Source: https://www.airbnb.com/help/article/767
+
+We’re sorry, some parts of the Airbnb website don’t work properly without JavaScript enabled.
+How-to
+How the Resolution Center helps you
+Need to send or request money for things related to your home stay, service, or experience? No problem! Go to the
+Resolution Center
+to open a refund or payment request.
+Sending or requesting money in the Resolution Center
+You may need to add a payment method before sending or requesting money through the Resolution Center.
+You have up to 60 days after your reservation’s checkout date or the end of the service or experience to submit a Resolution Center request.
+What you can use the Resolution Center for
+Refunds
+Refunds agreed upon by both host and guests, for example there’s a
+missing or broken amenity
+Requests from guests for refunds, for example the place
+wasn’t clean at check-in
+Optional fees
+For example:
+Host offering paid transportation service to their home, business, or experience location
+Guest access to elected amenities or upgrades
+Security deposits
+Security deposits can only be charged by
+select software-connected hosts
+and must be properly disclosed in the appropriate fee field, so that it is disclosed to guests at checkout
+What the Resolution Center can’t be used for
+Reservation alteration
+You can’t use the Resolution Center to collect payment for additional costs or provide refunds for modifications to nights, guest count, or pet count. You must use
+Change reservation
+for
+reservation alterations
+.
+Mandatory fees and security deposits
+All mandatory fees must be disclosed in the
+appropriate fee field
+or in the nightly price if there's no applicable fee field. Including these fees in the listing description at the time of booking is insufficient. Limited exceptions exist:
+Select software-connected hosts
+may collect payment for disclosed mandatory fees and security deposits separately in the Resolution Center. These mandatory fees include:
+Utilities (water, heat, electricity, air conditioning)
+Resort fees
+Linen fees
+Management fees
+HOA fees
+Cleaning fees
+Security deposits
+In locations where Airbnb doesn't collect taxes or where hosts are legally required to collect them directly from guests, hosts must disclose taxes in the listing description.
+Hotel stays
+The Resolution Center may not be available for use with some hotel stays. Hotels may also collect payment off the Airbnb platform for optional fees (ex: parking) where it's in the course of normal business practices.
+The Resolution Center doesn’t handle review mediation. Find out more about
+how Airbnb reviews work
+, including the steps to
+remove a review from a host or guest
+.
+Where to find your Resolution Center requests
+If a host or guest requests money for extra services or a refund, you’ll find their request in your email associated with your Airbnb account or in the
+Resolution Center
+.
+If a host and guest can't reach an agreement
+Every now and then, hosts and guests aren’t able to make it work. If you haven’t come to an agreement, there's an option to ask Airbnb to help you mediate.
+Issues must be reported to Airbnb within 72 hours of discovery to be eligible under our
+rebooking and refund policy for homes
+or our
+refund policy for services and experiences
+. From there, a dedicated team member will review the info provided by everyone and ask questions (if necessary) before making a final decision.
+Note: For mediation requests, you only have 1 hour to respond.
+Getting reimbursed for damage
+Sometimes accidents happen, which is why there’s
+AirCover for Hosts
+.
+AirCover for Hosts is top-to-bottom protection for hosts. It includes $3 million in
+Host damage protection
+, in addition to $1 million liability insurance, guest identity verification, reservation screening and a 24-hour safety line. It’s always included and always free whenever you host.
+If a guest causes damage to your place or belongings during an Airbnb stay, you can file a reimbursement request through our Resolution Center. You’re reimbursed for certain damage caused by guests to your home and belongings if the guest doesn't pay for the damage.
+Learn about the process
+.
+Host damage protection isn’t an insurance policy. Host damage protection and
+Experiences & Services liability insurance
+don’t cover hosts who offer stays through Airbnb Travel, LLC or hosts who offer Stays or Experiences in Japan—where
+Japan Host Insurance
+and
+Japan Experience Protection Insurance
+apply. For listings in Washington state, Airbnb’s contractual obligations under Host damage protection are covered by an insurance policy purchased by Airbnb. For hosts whose country of residence or establishment is outside of Japan,
+these Host Damage Protection Terms
+apply. Keep in mind that all coverage limits are shown in USD.
+Host liability insurance and Experiences & Services liability insurance are underwritten by third-party insurers. If you’re hosting in the UK, the Host liability insurance policy and Experiences & Services liability insurance policy are underwritten by Zurich Insurance Company Ltd and are arranged and concluded at no additional cost for UK hosts by Airbnb UK Services Limited—an appointed representative of Aon UK Limited, authorized and regulated by the Financial Conduct Authority. Aon’s FCA register number is 310451. You can check this on the
+Financial Services Register
+by visiting the FCA’s website or contacting the FCA on 0800 111 6768. The Host liability and Experiences & Services liability policies within AirCover for Hosts are regulated by the Financial Conduct Authority; the remaining products and services are not regulated products arranged by Airbnb UK Services Limited. FP.AFF.476.LC.
+If you’re hosting in the European Economic Area (EEA), the the Host liability insurance policy and Experiences & Services liability insurance policy are underwritten by Zurich Insurance Europe AG, branch in Spain, and are arranged and concluded in Spain at no additional cost for hosts in the EEA by Airbnb Spain Insurance Agency S.L.U. (ASIASL), a non-tied insurance agency supervised by the Directorate General for Insurance Pension and Funds (DGSFP) and registered in Spain with number AJ0364 in the Registry of the Insurance Distributors of the DGSFP. You can verify this registration by visiting the
+DGSFP Insurance Distributors Register
+and you can access full details of ASIASL
+here
+.
+Did this article help?
+Yes
+No
+Related articles
+How-to • Host
+Request or send money in the Resolution Center
+The Resolution Center makes it easy for hosts and guests to request or send money to one another for things related to an Airbnb home, service, or experience.
+How-to
+How to get to the Resolution Center
+You can access the Resolution Center through the Help Center to send or request money for things related to your Airbnb reservation.
+How-to • Guest
+When you’ll get your refund
+While they are issued almost immediately, most refunds arrive within 15 days, but for some payment methods and regions, it might take longer.

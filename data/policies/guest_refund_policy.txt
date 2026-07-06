@@ -1,0 +1,59 @@
+Source: https://www.airbnb.com/help/article/2062
+
+We’re sorry, some parts of the Airbnb website don’t work properly without JavaScript enabled.
+How-to • Home host
+Create and edit rule-sets
+If you use
+professional hosting tools
+you can create and edit rule-sets on a single listing
+calendar
+or on your
+multi-calendar.
+Learn more about
+how rule-sets work
+.
+Create a new rule-set
+Once you have created and saved a rule-set, you can apply it to any dates on a single listing calendar or across dates on your multi-calendar.
+Desktop
+iOS app
+Android app
+Mobile browser
+Create a rule-set on desktop
+Click
+Calendar
+and select the dates you’d like to apply a rule-set to
+Go to
+Rule-sets
+and click
+Add rule-set
+Name the rule-set and choose a color to represent it on your calendar
+Set any pricing discounts, availability requirements, and promotions
+Click
+Save
+Edit an existing rule-set
+Desktop
+iOS app
+Android app
+Mobile browser
+Edit a rule-set on desktop
+Click
+Calendar
+and select a date with the rule-set you want to edit
+Go to the rule-set and click
+Edit
+Make your changes and click
+Save
+Airbnb can block your calendar if you haven’t provided all the information required for your account.
+Did this article help?
+Yes
+No
+Related articles
+How-to • Home host
+How rule-sets work
+Once you apply a rule-set to a listing, it will override existing pricing and availability settings you’ve set for those dates.
+How-to • Home host
+Using professional hosting tools
+Hosts with multiple listings can manage them with professional hosting tools, including multi-calendar, rule-sets, and tasks.
+How-to • Home host
+Pricing your home listing
+As a host, you’re always in charge of your prices. You can change it at any time—you’re in control.

@@ -1,0 +1,22 @@
+# Environment
+.env
+__pycache__/
+*.pyc
+*.pyo
+
+# Data (dataset too large for GitHub — download from Inside Airbnb)
+data/listings.csv
+
+# NOTE: models/ and vector_store/ are intentionally NOT ignored.
+# Train locally first (python train_and_save_model.py + python ingest_policies.py),
+# then commit the artifacts so Render can serve them without re-training on deploy.
+
+# Python
+.venv/
+*.egg-info/
+dist/
+build/
+
+# OS
+.DS_Store
+Thumbs.db

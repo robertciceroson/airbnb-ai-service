@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: airbnb-ai-service
+    runtime: python
+    region: ohio          # closest free-tier region to Richmond, VA
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: GROQ_API_KEY
+        sync: false       # set manually in Render dashboard (never in code)
+      - key: LLM_MODEL
+        value: llama-3.3-70b-versatile
+      - key: LLM_TEMPERATURE
+        value: "0.2"
+      - key: PYTHON_VERSION
+        value: "3.11.0"
+    healthCheckPath: /health

@@ -1,0 +1,97 @@
+Source: https://www.airbnb.com/help/article/2517
+
+We’re sorry, some parts of the Airbnb website don’t work properly without JavaScript enabled.
+Rules • Home host
+San Antonio, TX
+When deciding whether to become an Airbnb host, it is important for you to understand the laws in your region or city. As a platform and online marketplace we do not provide legal advice, but we want to provide resources that may help you better understand applicable laws and regulations.  This list is not exhaustive, but it may give you a good start in understanding your local laws. If you have questions, visit the short-term rental homepage or other government agencies directly, or consult a local lawyer or tax professional.
+If you have questions, you can check San Antonio’s
+Short-Term Rental page
+, email the San Antonio Development Services Department, or call them at 210-207-1111.
+Building and housing standards
+San Antonio enforces rules and regulations that specify minimum construction, design, maintenance standards, habitability, health, and safety. Certain regulations applicable to residential and non-residential uses may be relevant to your listing. Check the City of San Antonio’s pages for
+Short-Term Rentals
+,
+Constructing in San Antonio
+, or
+San Antonio Development Services
+for more info.
+Short-term rental permits
+You need a permit to offer a short-term rental to guests in San Antonio. A permit from the City of San Antonio is only required if the property is inside the San Antonio City Limits. If the property is within Bexar County or another incorporated city in Bexar County, no permit is required from the City of San Antonio, but a Hotel Occupancy Tax Account must still be set up with the City of San Antonio’s Finance Department as the City collects Hotel Occupancy Taxes on behalf of Bexar County.
+The City of San Antonio defines a short-term rental as an entire or partial residential dwelling unit, apartment, condominium, or accessory dwelling where sleeping areas are rented to overnight guests for a period of less than 30 consecutive days.
+San Antonio recognizes two types of short-term rentals:
+Type 1
+The following conditions apply to a Type 1 short-term rental permit:
+The owner or operator resides on the property and it is the primary residence
+No density limitations
+Type 2
+The following conditions apply to a Type 2 short-term rental permit:
+The property is not occupied by either the owner or operator as their primary residence
+Allowed by right, with density limitations of up to 12.5% of the units on a block face
+If the STR is in a multi-family building, no more than 12.5% of the total number of units on the property can be a Type 2 STR by right.
+When the 12.5% density limitation is proposed to be met or exceeded in either a single-family or multi-family building, a special exception is needed from the Board of Adjustment in order to operate a Type 2 STR.
+Permit applications
+You can set up a Hotel Occupancy Tax account with the City’s Finance Department, apply for a Short-Term Rental Permit, and/or pay monthly Hotel Occupancy Tax on the City of San Antonio
+Host Compliance Portal
+.
+You need to show documentation that proves ownership for both types of STR licenses. For Type 1, you’ll also need to prove that the listing is your primary residence.
+Valid documentation includes:
+Application fee of $300 (Type 1) or $450 (Type 2) (non‐refundable if application is not approved), which may be paid online by credit card or e-check
+A sketch or written description that explains the location of the available parking spaces
+A sketch of the floor plan, which identifies sleeping areas, proposed maximum number of guests, any evacuation routes, and locations of fire extinguishers
+A special exception from Board of Adjustment (if required)
+Permits are valid for three years and are not transferable. Each individual unit requires its own permit.
+Check San Antonio’s
+Short-Term Rentals
+page or
+Short-Term Rentals Ordinance Fact Sheet
+for more information. For more details about the Hotel Occupancy Tax, check the
+Hotel Occupancy Tax Fact Sheet
+.
+Operational requirements
+San Antonio requires short-term rental hosts to follow a number of operational requirements. Maintain these requirements to make sure your permit remains in good standing.
+Insurance
+The City of San Antonio requires hosts to have a liability insurance policy. The City doesn’t specify the amount of insurance required, but the policy must be sufficient for personal injury liability of guests.
+Zoning restrictions
+Short-term rentals are allowed in all residential and multifamily zoning districts and most commercial zoning districts. Short-term rentals are NOT allowed in C-3, L, I-1, or I-2 zoning districts. Check the City’s
+One-Stop Map
+to determine your property’s zoning.
+The following activities are prohibited:
+Events uses, party spaces, and other similar venues
+Provision of food and/or beverage preparation services
+Excessive noise in violation of the City of San Antonio noise ordinance
+Overnight sleeping outdoors and/or outdoor sleeping spaces for rent
+Use of a recreational vehicle (RV) as a short-term rental
+Safety
+The City of San Antonio has several safety requirements to ensure the safety of guests:
+A maximum of two adult occupants per sleeping area
+A 2A:10B:C type fire extinguisher (a standard five pound extinguisher) must be mounted within 75 feet of every portion of the short-term rental
+Working smoke and carbon monoxide detectors must be installed
+Every sleeping area must have primary and secondary entrances and exits (for example, a door and a working window)
+An evacuation plan must be posted in every unit
+Taxes
+Check San Antonio’s fact sheet for an overview of the
+Hotel Occupancy Tax
+. The City of San Antonio’s HOT rate is 9%, which is comprised of a 7% general occupancy tax and an additional 2% for the Convention Center expansion. The City also collects Bexar County’s 1.75% hotel occupancy tax on behalf of Bexar County. Hosts are responsible for collecting and paying local taxes in San Antonio. You can email the Finance Department (Revenue Collections) or call them at 210-207-8667 if you have additional questions.
+Adding registration details to your listing(s)
+The law also requires all Hosts to display their registration number on their listing. To add this number to your listing, go to
+Listings
+, select the listing you want, and add the number under
+Regulations
+.
+Other contracts and rules
+As a host, you need to understand and abide by other contracts or rules that bind you, including leases, co-op rules, HOA rules, or other rules established by tenant organizations. You should be able to find out more by contacting your housing authority (such as a community council) or landlord. Your lease (or other contract) might also have specific details.
+Our commitment to your community
+We are committed to working with local officials to clarify how local rules impact the short-term rental community. We will continue to advocate for changes that will enable people to rent out their homes.
+Did this article help?
+Yes
+No
+Related articles
+Rules
+Occupancy tax collection and remittance by Airbnb in Texas
+Here’s what you need to know about occupancy tax collection and remittance in your area.
+How-to • Host
+Find all your reservations as a host
+You can find your current and upcoming reservations in your Today tab, and you can find completed reservations in your Earnings.
+How-to
+How to report discrimination to Airbnb
+Airbnb’s nondiscrimination policy was created to protect our community, and we take reports of discrimination very seriously.

@@ -1,0 +1,74 @@
+Source: https://www.airbnb.com/help/article/1857
+
+We’re sorry, some parts of the Airbnb website don’t work properly without JavaScript enabled.
+How-to
+Airbnb service fees
+To help Airbnb run smoothly and to cover the cost of services like 24/7 customer support, we charge a service fee when a booking is confirmed.
+There are 2 different fee structures for stays: a split fee and single fee.
+Airbnb service fees for home hosts
+1. Split-fee
+This fee structure is split between the host and the guest.
+Host service fee
+Most hosts pay a 3% service fee, but some pay more, including some hosts with listings in Italy,  and Brazil. Hosts pay a 4% fee for listings in Brazil. The fee is automatically deducted from the total price (service fees are a percentage of the nightly price and any
+fees charged by the host
+, but exclude the guest service fee and taxes) to calculate the host payout.
+Starting June 2026, hosts will pay a 4% fee for listings in Mexico.
+The split-fee structure will no longer be available to certain hosts. These hosts will migrate to the single-fee structure. To help hosts who don't use property management software adjust their pricing when they transition from the split-fee structure to the single-fee structure, we built a new price adjustment tool in the app. Learn more about
+how the pricing adjustment tool works
+.
+Review the host service fee for a reservation
+Desktop
+iOS app
+Android app
+Mobile browser
+Find the host service fee on desktop
+Click
+Today
+>
+Menu
+>
+Earnings
+Go to
+Upcoming
+or
+Paid
+Filter listings, payout methods, and date range, or search using the confirmation code or payout amount
+Click to open a transaction
+Under
+Earnings
+, find the
+Airbnb service fee
+Guest service fee
+The guest service fee can be found in the
+Price breakdown
+before
+booking a reservation
+.
+Guests pay a service fee ranging from 14.1% to 16.5% of the booking subtotal (the booking subtotal includes the nightly price and any additional fees charged by the host, but excludes the guest service fee and taxes). The guest service fee varies based on a variety of factors and may be higher or lower depending on the booking.
+For bookings where the guest pays using a different currency from the one set by the host for their listing, we adjust our fees to align with the value we provide our guests. For these cross-currency bookings, the guest service fee will include an additional amount, resulting in a guest service fee of up to 16.5% of the booking subtotal.
+2. Single fee
+With this structure, the entire fee is deducted from the host's payout. Most hosts pay 15.5%, remaining hosts typically pay 14%-16%, and hosts pay a 16% fee for listings in Brazil.
+This fee structure is mandatory for certain hosts, including traditional hospitality listings (e.g., hotels, serviced apartments, etc.),
+hosts who use property management software
+, and hosts in countries subject to this fee structure.
+Starting June 2026, hosts will pay a 16% fee for listings in Mexico.
+VAT charges
+Depending on the laws of the jurisdiction involved,
+VAT
+may be applicable to the above fees. The service fee shown to hosts and guests is VAT inclusive, where applicable.
+We reserve the right to change our service fees at any time, and any changes will be made in accordance with our Terms of Service.
+Airbnb service fees for service and experience hosts
+For service reservations, we typically charge a 15% fee, with a minimum fee of $6 USD (or the local currency equivalent), which may vary based on the daily exchange rate. For experience reservations, we typically charge a 20% service fee.
+Did this article help?
+Yes
+No
+Related articles
+How-to • Guest
+Service fee refunds for home stays
+The service fee is refundable for home stays as long as all of the criteria are met. Find out more about what is needed to receive a refund.
+How-to • Home host
+Preview your price breakdown
+You can use the nightly price breakdown feature to preview what your guest will pay when reserving your space—and what you’ll earn.
+How-to • Guest
+How pricing works for homes
+Learn more about how the total price of a reservation is calculated

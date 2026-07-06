@@ -1,0 +1,38 @@
+Source: https://www.airbnb.com/help/article/140
+
+We’re sorry, some parts of the Airbnb website don’t work properly without JavaScript enabled.
+How-to
+Security deposits
+Most hosts are not allowed to charge security deposits, either through our
+Resolution Center
+or outside the Airbnb platform. To address damage or accidents that happen during a stay, Airbnb offers top-to-bottom protection through
+AirCover for Hosts
+.
+However, some hosts, including
+select software-connected hosts
+, may collect a security deposit off of the Airbnb platform. In these instances in which security deposits are permitted, they must be shown in the appropriate fee field so that it’s properly disclosed to guests.
+Hotels can collect deposits outside of the Airbnb platform
+Hotels may ask for a credit card at check-in to cover the cost of incidentals or a security deposit as part of their standard procedures, but this must be disclosed in the listing. The deposit, minus any charges, is usually released upon checkout. Acceptable forms of deposit or credit card holds vary by hotel policy.
+Damage reimbursements without a security deposit
+If a guest, their invitee, or their pet causes damage during a home, service, or experience reservation, the host can request reimbursement from the guest through our
+Resolution Center
+. If Airbnb reviews the case and determines the guest is responsible, their payment method may be charged.
+Guests
+: Learn what to do
+if you accidentally cause damage
+Hosts
+: Learn how to request reimbursement for
+damage, missing items, or unexpected cleaning
+Did this article help?
+Yes
+No
+Related articles
+How-to
+Collecting fees outside Airbnb
+Hosts may not collect any additional fees or charges outside the Airbnb platform unless expressly authorized by Airbnb.
+How-to • Home host
+Managing listings with property management software
+If the team owner account manages Airbnb listings through property management software, the software can be used to manage listings created by the hosting team.
+How-to • Guest
+If a host asks you to pay outside Airbnb
+If an Airbnb host on the Airbnb site asks you to pay outside or through another company, report it to us.
