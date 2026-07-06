@@ -17,10 +17,9 @@ langchain-groq>=0.1.6
 langchain-community>=0.2.5
 langgraph>=0.1.19
 
-# ── RAG / Embeddings ──────────────────────────────────────────────────────────
-faiss-cpu>=1.8.0
-sentence-transformers>=3.0.1
-langchain-huggingface>=0.0.3
+# ── RAG — BM25 sparse retrieval (no PyTorch / no embeddings model needed) ────
+rank-bm25>=0.2.2
+langchain-text-splitters>=1.1.2
 
 # ── Utilities ─────────────────────────────────────────────────────────────────
 python-dotenv>=1.0.1

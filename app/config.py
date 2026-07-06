@@ -18,11 +18,9 @@ class Settings(BaseSettings):
     model_path: Path = BASE_DIR / "models" / "xgboost_model.joblib"
     encoders_path: Path = BASE_DIR / "models" / "encoders.joblib"
     listings_csv: Path = BASE_DIR / "data" / "listings.csv"
-    faiss_index_path: Path = BASE_DIR / "vector_store" / "faiss_index"
     policies_dir: Path = BASE_DIR / "data" / "policies"
 
-    # ── RAG ───────────────────────────────────────────────────────────────────
-    embedding_model: str = "sentence-transformers/all-MiniLM-L6-v2"
+    # ── RAG (BM25 sparse retrieval — no embedding model needed) ──────────────
     chunk_size: int = 500
     chunk_overlap: int = 50
     retriever_k: int = 4

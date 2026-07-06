@@ -24,7 +24,7 @@ from app.models.schemas import (
     HealthResponse,
 )
 from app.agent.graph import AirbnbAgent
-from app.rag.ingest import load_vector_store, get_retriever
+from app.rag.ingest import get_retriever
 
 
 # ── App state (shared across requests) ───────────────────────────────────────
@@ -52,11 +52,10 @@ async def lifespan(app: FastAPI):
         print(f"⚠️  {e}")
         print("   Run `python train_and_save_model.py` then restart.")
 
-    # Load FAISS vector store
+    # Load BM25 retriever from policy docs
     retriever = None
     try:
-        vs = load_vector_store()
-        retriever = get_retriever(vs)
+        retriever = get_retriever()
         state.vector_store_loaded = True
     except FileNotFoundError as e:
         print(f"⚠️  {e}")
