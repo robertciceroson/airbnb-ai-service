@@ -2,9 +2,10 @@
 Airbnb AI Service — FastAPI application entry point.
 
 Endpoints:
-  GET  /health    — liveness check
-  POST /predict   — XGBoost price prediction
-  POST /chat      — LangGraph multi-tool AI agent
+  GET  /health        — liveness check
+  POST /predict       — XGBoost price prediction
+  POST /chat          — LangGraph multi-tool AI agent (standard)
+  POST /chat/stream   — same agent, SSE streaming (keepalive pings every 3s)
 
 Run locally:
     uvicorn app.main:app --reload --port 8000
@@ -12,9 +13,12 @@ Run locally:
 Interactive docs:
     http://localhost:8000/docs
 """
+import asyncio
+import json
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import StreamingResponse
 
 from app.config import settings
 from app.models.predictor import Predictor
@@ -168,3 +172,61 @@ async def chat(request: ChatRequest):
         )
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+
+
+@app.post("/chat/stream", tags=["Chat Agent"])
+async def chat_stream(request: ChatRequest):
+    """
+    Streaming version of /chat using Server-Sent Events.
+
+    Sends keepalive pings every 3 s while the agent processes, then emits the
+    final result. Prevents Render free-tier's 30-second request timeout from
+    killing long-running agent calls.
+
+    Event types in the SSE stream:
+      - {"type": "ping"}                    — keepalive, ignore in client
+      - {"type": "result", "reply": ..., "tool_used": ..., "sources": [...], "conversation_id": ...}
+      - {"type": "error",  "detail": ...}   — agent raised an exception
+      - [DONE]                              — stream complete
+    """
+    if state.agent is None:
+        raise HTTPException(status_code=503, detail="Agent not initialized.")
+
+    history = [{"role": m.role, "content": m.content} for m in request.history]
+
+    async def event_generator():
+        loop = asyncio.get_event_loop()
+        future = loop.run_in_executor(
+            None,
+            lambda: state.agent.invoke(
+                user_message=request.message,
+                history=history,
+            ),
+        )
+
+        # Send keepalive pings every 3 s while the agent thread runs.
+        # asyncio.shield keeps the underlying Future running even when the
+        # wait_for times out and cancels its wrapper.
+        while not future.done():
+            try:
+                await asyncio.wait_for(asyncio.shield(future), timeout=3.0)
+            except asyncio.TimeoutError:
+                yield f"data: {json.dumps({'type': 'ping'})}\n\n"
+
+        # Agent finished — emit result or error
+        try:
+            result = future.result()
+            payload = {
+                "type": "result",
+                "reply": result["reply"],
+                "tool_used": result.get("tool_used", ""),
+                "sources": result.get("sources", []),
+                "conversation_id": request.conversation_id,
+            }
+            yield f"data: {json.dumps(payload)}\n\n"
+        except Exception as exc:
+            yield f"data: {json.dumps({'type': 'error', 'detail': str(exc)})}\n\n"
+
+        yield "data: [DONE]\n\n"
+
+    return StreamingResponse(event_generator(), media_type="text/event-stream")

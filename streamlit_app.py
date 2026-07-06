@@ -11,6 +11,7 @@ Then launch this app:
     streamlit run streamlit_app.py
 """
 import os
+import json
 import streamlit as st
 import datetime
 import uuid
@@ -140,15 +141,45 @@ def api_predict(payload: dict) -> dict | None:
 
 
 def api_chat(message: str, conversation_id: str, history: list) -> dict | None:
+    """
+    Calls /chat/stream (SSE) so Render's 30-second timeout is never hit.
+    The server sends keepalive pings every 3 s; we ignore them and wait
+    for the 'result' or 'error' event.
+    """
     payload = {
         "message": message,
         "conversation_id": conversation_id,
         "history": history,
     }
     try:
-        r = httpx.post(f"{API_BASE}/chat", json=payload, timeout=30)
-        r.raise_for_status()
-        return r.json()
+        with httpx.stream(
+            "POST",
+            f"{API_BASE}/chat/stream",
+            json=payload,
+            timeout=120,        # 2-minute client-side safety net
+        ) as response:
+            response.raise_for_status()
+            for line in response.iter_lines():
+                if not line or not line.startswith("data: "):
+                    continue
+                data_str = line[6:]
+                if data_str == "[DONE]":
+                    break
+                try:
+                    data = json.loads(data_str)
+                except json.JSONDecodeError:
+                    continue
+                if data.get("type") == "ping":
+                    continue            # keepalive — discard
+                elif data.get("type") == "result":
+                    return {
+                        "reply":     data["reply"],
+                        "tool_used": data.get("tool_used", ""),
+                        "sources":   data.get("sources", []),
+                    }
+                elif data.get("type") == "error":
+                    st.error(f"Agent error: {data.get('detail', 'Unknown error')}")
+                    return None
     except httpx.ConnectError:
         st.error("⚠️ Cannot reach the FastAPI backend. Run: `uvicorn app.main:app --reload --port 8000`")
         return None
