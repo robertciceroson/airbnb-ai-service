@@ -31,7 +31,7 @@ st.set_page_config(
 #   API_BASE_URL = "https://your-service.onrender.com"
 _secrets = st.secrets if hasattr(st, "secrets") else {}
 API_BASE    = os.getenv("API_BASE_URL",  _secrets.get("API_BASE_URL",  "http://localhost:8000"))
-GROQ_API_KEY = os.getenv("GROQ_API_KEY", _secrets.get("GROQ_API_KEY", ""))
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY", _secrets.get("GOOGLE_API_KEY", ""))
 
 # ── Shared CSS ────────────────────────────────────────────────────────────────
 st.markdown("""
@@ -151,7 +151,7 @@ def load_agent():
     timeout constraints.  Price lookups call the Render /predict endpoint;
     policy search uses a local BM25 retriever over the bundled policy docs.
     """
-    from langchain_groq import ChatGroq
+    from langchain_google_genai import ChatGoogleGenerativeAI
     from langchain_community.retrievers import BM25Retriever
     from langchain_community.document_loaders import DirectoryLoader, TextLoader
     from langchain_text_splitters import RecursiveCharacterTextSplitter
@@ -225,9 +225,9 @@ def load_agent():
     tools = [policy_search, price_lookup, human_handoff]
 
     # ── LLM + graph ───────────────────────────────────────────────────────────
-    llm = ChatGroq(
-        api_key=GROQ_API_KEY,
-        model="llama-3.3-70b-versatile",
+    llm = ChatGoogleGenerativeAI(
+        google_api_key=GOOGLE_API_KEY,
+        model="gemini-1.5-flash",
         temperature=0.2,
     ).bind_tools(tools)
 
