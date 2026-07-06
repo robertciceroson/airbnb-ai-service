@@ -227,7 +227,7 @@ def load_agent():
     # ── LLM + graph ───────────────────────────────────────────────────────────
     llm = ChatGoogleGenerativeAI(
         google_api_key=GOOGLE_API_KEY,
-        model="gemini-1.5-flash",
+        model="gemini-2.0-flash",
         temperature=0.2,
     ).bind_tools(tools)
 
