@@ -434,9 +434,9 @@ with tab1:
 # ─────────────────────────────────────────────────────────────────────────────
 with tab2:
     st.markdown(
-        "<p style='color:#555; font-size:0.9rem;'>Ask anything about Airbnb — "
+        "<p style='color:#555; font-size:0.9rem;'><strong>Ask anything about Airbnb — "
         "pricing, cancellations, refunds, check-in, disputes, or policies. "
-        "The agent will pick the right tool automatically.</p>",
+        "The agent will pick the right tool automatically.</strong></p>",
         unsafe_allow_html=True,
     )
 
