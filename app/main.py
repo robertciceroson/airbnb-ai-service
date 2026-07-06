@@ -195,7 +195,7 @@ async def chat_stream(request: ChatRequest):
     history = [{"role": m.role, "content": m.content} for m in request.history]
 
     async def event_generator():
-        loop = asyncio.get_event_loop()
+        loop = asyncio.get_running_loop()
         future = loop.run_in_executor(
             None,
             lambda: state.agent.invoke(
@@ -229,4 +229,12 @@ async def chat_stream(request: ChatRequest):
 
         yield "data: [DONE]\n\n"
 
-    return StreamingResponse(event_generator(), media_type="text/event-stream")
+    return StreamingResponse(
+        event_generator(),
+        media_type="text/event-stream",
+        headers={
+            "Cache-Control": "no-cache",
+            "X-Accel-Buffering": "no",   # tell Render's nginx not to buffer SSE
+            "Connection": "keep-alive",
+        },
+    )
