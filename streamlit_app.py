@@ -109,7 +109,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 st.markdown(
-    "<p style='text-align:center; color:#555;'>NYC Price Prediction + AI-Powered Customer Support</p>",
+    "<p style='text-align:center; color:#555;'><strong>NYC Price Prediction + AI-Powered Customer Support</strong></p>",
     unsafe_allow_html=True
 )
 st.divider()
