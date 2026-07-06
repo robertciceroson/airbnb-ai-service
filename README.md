@@ -249,7 +249,7 @@ docker run -p 8000:8000 --env-file .env airbnb-ai-service
 
 ## Author
 
-**Robert C. Son** — AI Engineer | Business Analyst | Process Engineer
+**Robert C. Son** — AI Engineer | AI Business Analyst | Process Engineer
 - GitHub: [github.com/robertciceroson](https://github.com/robertciceroson)
 - LinkedIn: [linkedin.com/in/robert-son-0b33b3bb](https://linkedin.com/in/robert-son-0b33b3bb)
 - Live demo (price predictor): [airbnb-price-prediction-a9hyny92wfihme4mnzkzte.streamlit.app](https://airbnb-price-prediction-a9hyny92wfihme4mnzkzte.streamlit.app)
