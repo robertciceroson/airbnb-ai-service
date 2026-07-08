@@ -39,7 +39,7 @@ DISABLE_AGENT = os.getenv("DISABLE_AGENT", "false").lower() == "true"
 
 class AppState:
     predictor: Predictor | None = None
-    agent: AirbnbAgent | None = None
+    agent: object | None = None  # AirbnbAgent when loaded; None in predict-only mode
     vector_store_loaded: bool = False
 
 
