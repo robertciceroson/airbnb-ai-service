@@ -555,4 +555,11 @@ with tab2:
             st.session_state.chat_error = ""
             st.rerun()
     with ctrl_col2:
-        c
+        conv_id_short = st.session_state.conversation_id[:8]
+        st.caption(f"Session: `{conv_id_short}…`")
+
+    st.divider()
+    st.caption(
+        "Powered by LangGraph · GPT-OSS 120B (Groq) · BM25 RAG · XGBoost · FastAPI  |  "
+        "[GitHub](https://github.com/robertciceroson/airbnb-ai-service)"
+    )
