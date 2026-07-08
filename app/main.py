@@ -12,9 +12,13 @@ Run locally:
 
 Interactive docs:
     http://localhost:8000/docs
+
+Set DISABLE_AGENT=true to skip LangChain/LangGraph loading (used on Render
+free tier to stay within 512 MB RAM — agent runs in Streamlit Cloud instead).
 """
 import asyncio
 import json
+import os
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
@@ -27,8 +31,8 @@ from app.models.schemas import (
     ChatRequest, ChatResponse,
     HealthResponse,
 )
-from app.agent.graph import AirbnbAgent
-from app.rag.ingest import get_retriever
+
+DISABLE_AGENT = os.getenv("DISABLE_AGENT", "false").lower() == "true"
 
 
 # ── App state (shared across requests) ───────────────────────────────────────
@@ -56,21 +60,26 @@ async def lifespan(app: FastAPI):
         print(f"⚠️  {e}")
         print("   Run `python train_and_save_model.py` then restart.")
 
-    # Load BM25 retriever from policy docs
-    retriever = None
-    try:
-        retriever = get_retriever()
-        state.vector_store_loaded = True
-    except FileNotFoundError as e:
-        print(f"⚠️  {e}")
-        print("   Run `python ingest_policies.py` then restart.")
+    # Load agent only when not disabled (skipped on Render free tier)
+    if DISABLE_AGENT:
+        print("ℹ️  DISABLE_AGENT=true — skipping LangChain/LangGraph load (predict-only mode).")
+    else:
+        from app.agent.graph import AirbnbAgent
+        from app.rag.ingest import get_retriever
 
-    # Build LangGraph agent (works even if predictor/retriever are None)
-    state.agent = AirbnbAgent(
-        predictor=state.predictor,
-        retriever=retriever,
-    )
-    print("✅ Agent ready.")
+        retriever = None
+        try:
+            retriever = get_retriever()
+            state.vector_store_loaded = True
+        except FileNotFoundError as e:
+            print(f"⚠️  {e}")
+            print("   Run `python ingest_policies.py` then restart.")
+
+        state.agent = AirbnbAgent(
+            predictor=state.predictor,
+            retriever=retriever,
+        )
+        print("✅ Agent ready.")
 
     yield  # ── App runs ──
 
