@@ -503,6 +503,15 @@ with tab2:
         unsafe_allow_html=True,
     )
 
+    # Clear chat reminder
+    st.markdown(
+        "<div style='font-size:0.78rem; color:#e53935; margin-top:6px;'>"
+        "🔴 <strong>Starting a new topic?</strong> Click <strong>Clear chat</strong> below "
+        "to keep the conversation clean and token-efficient."
+        "</div>",
+        unsafe_allow_html=True,
+    )
+
     # ── Send logic ────────────────────────────────────────────────────────────
     if send and user_input.strip():
         st.session_state.chat_error = ""  # clear previous error
