@@ -227,7 +227,7 @@ def load_agent():
     # ── LLM + graph ───────────────────────────────────────────────────────────
     llm = ChatGroq(
         api_key=GROQ_API_KEY,
-        model="llama3-groq-70b-8192-tool-use-preview",
+        model="openai/gpt-oss-120b",
         temperature=0.2,
     ).bind_tools(tools)
 
@@ -555,12 +555,4 @@ with tab2:
             st.session_state.chat_error = ""
             st.rerun()
     with ctrl_col2:
-        conv_id_short = st.session_state.conversation_id[:8]
-        st.caption(f"Session: `{conv_id_short}…`")
-
-    st.divider()
-    st.caption(
-        "Powered by LangGraph · Llama 3.3 70B (Groq) · BM25 RAG · XGBoost · FastAPI  |  "
-        "[GitHub](https://github.com/robertciceroson/airbnb-ai-service)"
-    )
-
+        c
