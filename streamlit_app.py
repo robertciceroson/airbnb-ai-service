@@ -496,8 +496,8 @@ with tab2:
     st.markdown(
         "<div style='font-size:0.78rem; color:#777; margin-top:2px;'>"
         "💡 Try: &nbsp;"
-        "<em>How much for a private room in Williamsburg in August?</em> &nbsp;·&nbsp; "
-        "<em>What's the refund if my host cancels?</em> &nbsp;·&nbsp; "
+        "<em>What is the refund if my host cancels?</em> &nbsp;·&nbsp; "
+        "<em>What is the difference between a refund and Airbnb travel credit when my host cancels?</em> &nbsp;·&nbsp; "
         "<em>How do I dispute a damage charge?</em>"
         "</div>",
         unsafe_allow_html=True,
