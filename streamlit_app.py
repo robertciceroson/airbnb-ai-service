@@ -227,7 +227,7 @@ def load_agent():
     # ── LLM + graph ───────────────────────────────────────────────────────────
     llm = ChatGroq(
         api_key=GROQ_API_KEY,
-        model="llama-3.3-70b-versatile",
+        model="llama3-groq-70b-8192-tool-use-preview",
         temperature=0.2,
     ).bind_tools(tools)
 
