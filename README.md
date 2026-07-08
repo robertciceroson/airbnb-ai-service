@@ -57,7 +57,7 @@ Two tabs, two AI systems:
 ---
 
 ## Support Chat — Features
-
+![Support Chat Preview](airbnb_support_chat_preview.png)
 The Support Chat tab runs a full LangGraph ReAct-style agent with three tools:
 
 | Tool | When it fires | What it does |
