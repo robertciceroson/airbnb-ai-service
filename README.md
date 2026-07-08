@@ -1,53 +1,42 @@
-# Airbnb AI Service — FastAPI + LangGraph Agent
+# Airbnb AI Service — FastAPI + LangGraph Agent + Support Chat
 
 **A production-style AI service platform** built on top of the [Airbnb Price Prediction](https://github.com/robertciceroson/Airbnb-Price-Prediction) project — extending it from a Streamlit demo into a REST API with a multi-tool conversational AI agent for customer service.
+
+🔗 **Live demo:** [airbnb-ai-service-tubhzkkmermmacr29pmakg.streamlit.app](https://airbnb-ai-service-tubhzkkmermmacr29pmakg.streamlit.app)
 
 ---
 
 ## What It Does
 
-This project exposes two REST endpoints backed by two distinct AI systems:
+Two tabs, two AI systems:
 
-| Endpoint | What it does |
+| Tab | What it does |
 |---|---|
-| `POST /predict` | Returns an estimated nightly Airbnb price for any NYC listing using a trained XGBoost model with seasonal adjustment |
-| `POST /chat` | Routes user messages through a LangGraph agent that selects from three tools: price lookup, policy RAG search, or human handoff |
+| 💰 **Price Predictor** | Estimates the nightly Airbnb price for any NYC listing using a trained XGBoost model with seasonal adjustment. Calls a FastAPI backend hosted on Render. |
+| 💬 **Support Chat** | Conversational AI agent (LangGraph + GPT-OSS 120B via Groq) that answers Airbnb policy and pricing questions using BM25 RAG over bundled policy documents. Runs entirely inside Streamlit Cloud — no Render timeout constraints. |
 
-Real-world scenario: a traveler asks *"How much would a private room in Williamsburg cost in August, and what's the cancellation policy if I need to cancel 3 days before check-in?"* — the agent calls the price tool for the first part and the RAG policy tool for the second, in a single conversation turn.
+**Real-world scenario:** A traveler asks *"How much would a private room in Williamsburg cost in August, and what's the difference between a refund and Airbnb travel credit if my host cancels?"* — the agent calls the price tool for the first part and retrieves the exact policy for the second, in a single conversation.
 
 ---
 
 ## Architecture
 
 ```
-Client (Streamlit / cURL / any HTTP client)
-         │
-         ▼
-   FastAPI (uvicorn)
-   ┌──────────────────────────────────┐
-   │  GET  /health                    │
-   │  POST /predict ─► XGBoost Model  │
-   │  POST /chat    ─► LangGraph Agent│
-   └────────────────┬─────────────────┘
-                    │
-         ┌──────────▼──────────┐
-         │   LangGraph Agent    │
-         │  (StateGraph + LLM)  │
-         └──┬─────────┬────────┘
-            │         │         │
-     ┌──────▼─┐  ┌────▼────┐  ┌▼──────────┐
-     │ Price  │  │ Policy  │  │  Human    │
-     │ Tool   │  │ RAG Tool│  │ Handoff   │
-     │(XGBoost│  │(FAISS + │  │  Tool     │
-     │  API)  │  │LangChain│  │           │
-     └────────┘  └─────────┘  └───────────┘
-                      │
-               ┌──────▼──────┐
-               │ FAISS Index  │
-               │ (Airbnb Help │
-               │  Center docs)│
-               └─────────────┘
+┌─────────────────────────────────────────────────────────┐
+│                  Streamlit Cloud                         │
+│                                                          │
+│  Tab 1: Price Predictor                                  │
+│    └─► POST /predict ─────────────────────────────────► │──┐
+│                                                          │  │
+│  Tab 2: Support Chat (LangGraph agent — runs here)       │  │  Render (Free Tier)
+│    └─► load_agent() [cached]                             │  │  FastAPI /predict
+│          ├─ price_lookup ────────────────────────────►   │──┘  XGBoost only
+│          ├─ policy_search (BM25 over data/policies/)     │     DISABLE_AGENT=true
+│          └─ human_handoff                                │
+└─────────────────────────────────────────────────────────┘
 ```
+
+**Why the agent runs in Streamlit, not Render:** Render's free tier has a 512 MB RAM limit and a 30-second request timeout — both too tight for a LangGraph + LLM agent. The FastAPI backend uses `DISABLE_AGENT=true` and only serves the XGBoost predictor. The LangGraph agent is built once, cached with `@st.cache_resource`, and runs entirely inside Streamlit Cloud.
 
 ---
 
@@ -56,14 +45,41 @@ Client (Streamlit / cURL / any HTTP client)
 | Layer | Technology |
 |---|---|
 | API Framework | FastAPI + Uvicorn |
-| ML Model | XGBoost (trained on ~49K NYC listings, June 2026) |
+| ML Model | XGBoost (trained on ~49K NYC listings, June 2026 — Inside Airbnb) |
 | Agent Orchestration | LangGraph (StateGraph) |
-| LLM | Llama 3.3 70B via Groq |
-| RAG | LangChain + FAISS + HuggingFace Embeddings |
+| LLM | GPT-OSS 120B via Groq |
+| RAG | BM25 sparse retrieval (rank-bm25 + LangChain) — no embeddings, no vector DB |
 | Data Validation | Pydantic v2 |
 | Model Serialization | joblib |
-| Containerization | Docker |
 | Frontend | Streamlit (two-tab: Price Predictor + Support Chat) |
+| Deployment | Render (FastAPI, predict-only) + Streamlit Cloud (full app + agent) |
+
+---
+
+## Support Chat — Features
+
+The Support Chat tab runs a full LangGraph ReAct-style agent with three tools:
+
+| Tool | When it fires | What it does |
+|---|---|---|
+| `policy_search` | Policy / cancellation / refund / rules / dispute questions | BM25 retrieval over 16 bundled Airbnb Help Center policy documents |
+| `price_lookup` | Price / cost / rate questions | Calls the Render `/predict` endpoint (XGBoost + seasonal adjustment) |
+| `human_handoff` | Frustration, account security, unresolvable issues | Returns a structured escalation message |
+
+**Policy documents included** (`data/policies/`):
+
+- Cancellation policies (Flexible, Moderate, Strict)
+- Guest refund policy + host refund policy
+- Refund vs. travel credit — what guests actually receive and when
+- Extenuating circumstances / major disruptive events
+- Resolution Center — how to dispute damage charges
+- Security deposit, service fees, payment methods
+- Check-in instructions, house rules, review policy
+
+**UI features:**
+- Session ID displayed per conversation (for debugging)
+- Clear Chat button + red reminder hint to start fresh for new topics
+- Suggested prompts: *What is the refund if my host cancels?* · *What is the difference between a refund and Airbnb travel credit?* · *How do I dispute a damage charge?*
 
 ---
 
@@ -72,31 +88,28 @@ Client (Streamlit / cURL / any HTTP client)
 ```
 airbnb-ai-service/
 ├── app/
-│   ├── main.py              # FastAPI app — /health, /predict, /chat
+│   ├── main.py              # FastAPI app — /health, /predict, /chat (DISABLE_AGENT mode)
 │   ├── config.py            # Centralized settings (pydantic-settings + .env)
 │   ├── models/
 │   │   ├── predictor.py     # XGBoost load-on-startup, predict()
 │   │   └── schemas.py       # Pydantic request/response models
-│   ├── agent/
-│   │   ├── graph.py         # LangGraph StateGraph — agent + tool nodes
-│   │   └── tools.py         # price_lookup, policy_search, human_handoff
-│   └── rag/
-│       └── ingest.py        # FAISS build + load + retriever
+│   └── agent/
+│       └── graph.py         # LangGraph StateGraph (used locally; disabled on Render)
 ├── data/
 │   ├── listings.csv         # NYC Airbnb dataset (Inside Airbnb, June 2026)
-│   └── policies/            # Fetched Airbnb Help Center .txt files
+│   └── policies/            # 16 Airbnb Help Center policy .txt files (BM25 source)
 ├── models/                  # Saved XGBoost model + encoders (joblib)
-├── vector_store/            # FAISS index files
-├── train_and_save_model.py  # Step 1: train XGBoost, serialize to disk
-├── ingest_policies.py       # Step 2: fetch Help Center pages, build FAISS
+├── streamlit_app.py         # Two-tab Streamlit frontend (Price Predictor + Support Chat)
+├── train_and_save_model.py  # Train XGBoost, serialize to disk
 ├── requirements.txt
 ├── .env.example
-└── Dockerfile
+├── render.yaml              # Render deployment config
+└── Procfile
 ```
 
 ---
 
-## Setup & Installation
+## Setup & Local Development
 
 ### Prerequisites
 - Python 3.11+
@@ -134,15 +147,15 @@ python train_and_save_model.py
 
 Outputs `models/xgboost_model.joblib` and `models/encoders.joblib`. Takes ~30 seconds on a standard laptop.
 
-### 5. Build the policy RAG index
+### 5. Run the Streamlit app
 
 ```bash
-python ingest_policies.py
+streamlit run streamlit_app.py
 ```
 
-Fetches 15 Airbnb Help Center pages, chunks them, embeds with `all-MiniLM-L6-v2`, and saves a FAISS index to `vector_store/`. Takes ~2 minutes on first run (embedding model downloads once).
+The Support Chat agent loads from `data/policies/` via BM25 — no separate index build step needed. Price lookups call `localhost:8000` by default.
 
-### 6. Start the API
+### 6. (Optional) Run the FastAPI backend locally
 
 ```bash
 uvicorn app.main:app --reload --port 8000
@@ -159,10 +172,11 @@ Interactive API docs: [http://localhost:8000/docs](http://localhost:8000/docs)
 {
   "status": "ok",
   "model_loaded": true,
-  "vector_store_loaded": true,
+  "vector_store_loaded": false,
   "version": "1.0.0"
 }
 ```
+> `vector_store_loaded` is `false` on Render (`DISABLE_AGENT=true`) — the agent runs in Streamlit Cloud, not here.
 
 ### `POST /predict`
 
@@ -170,7 +184,7 @@ Interactive API docs: [http://localhost:8000/docs](http://localhost:8000/docs)
 ```json
 {
   "borough": "Manhattan",
-  "neighbourhood": "Midtown",
+  "neighbourhood": "Chelsea",
   "room_type": "Entire home/apt",
   "minimum_nights": 2,
   "availability_365": 200,
@@ -184,21 +198,23 @@ Interactive API docs: [http://localhost:8000/docs](http://localhost:8000/docs)
 **Response:**
 ```json
 {
-  "base_price": 241.50,
-  "adjusted_price": 294.63,
+  "base_price": 747.00,
+  "adjusted_price": 911.00,
   "seasonal_multiplier": 1.22,
   "season_label": "☀️ Summer peak",
-  "neighbourhood_median": 265.0,
+  "neighbourhood_median": 610.0,
   "currency": "USD"
 }
 ```
 
 ### `POST /chat`
 
+> **Note:** `/chat` is available when running locally with `DISABLE_AGENT` unset or `false`. On the Render deployment it returns 503 (agent disabled). In production, the agent runs in Streamlit Cloud directly.
+
 **Request:**
 ```json
 {
-  "message": "What happens if I cancel 3 days before check-in on a moderate policy listing?",
+  "message": "What is the difference between a refund and Airbnb travel credit when my host cancels?",
   "conversation_id": "conv-abc-123",
   "history": []
 }
@@ -207,36 +223,26 @@ Interactive API docs: [http://localhost:8000/docs](http://localhost:8000/docs)
 **Response:**
 ```json
 {
-  "reply": "For a Moderate cancellation policy, cancelling 3 days before check-in means...",
+  "reply": "When a host cancels your confirmed reservation, Airbnb issues a full cash refund to your original payment method — not travel credit...",
   "tool_used": "policy_search",
   "conversation_id": "conv-abc-123",
-  "sources": ["Airbnb Help Center — Moderate Cancellation Policy"]
+  "sources": []
 }
 ```
 
 ---
 
-## Agent Tools
+## Deployment Notes
 
-| Tool | Trigger | What it does |
-|---|---|---|
-| `price_lookup` | Price / cost / rate questions | Calls XGBoost predictor with seasonal adjustment |
-| `policy_search` | Cancellation / refund / rules / disputes | RAG retrieval over Airbnb Help Center docs |
-| `human_handoff` | Frustration, account security, unresolvable issues | Returns structured escalation message with support links |
+### Render (FastAPI — predict-only)
+- Set `DISABLE_AGENT=true` in Render environment variables
+- This skips loading LangChain/LangGraph at startup, keeping memory under 512 MB
+- Only `/health` and `/predict` are active; `/chat` returns 503
 
----
-
-## Docker
-
-```bash
-# Build
-docker build -t airbnb-ai-service .
-
-# Run
-docker run -p 8000:8000 --env-file .env airbnb-ai-service
-```
-
-> **Note:** Run `train_and_save_model.py` and `ingest_policies.py` before building the image so the model and vector store are included.
+### Streamlit Cloud
+- Set `GROQ_API_KEY` and `API_BASE_URL` in Streamlit Secrets
+- `API_BASE_URL` should point to the Render service URL
+- The LangGraph agent and BM25 retriever load once on first chat and are cached for the session lifetime
 
 ---
 
@@ -252,4 +258,4 @@ docker run -p 8000:8000 --env-file .env airbnb-ai-service
 **Robert C. Son** — AI Engineer | AI Business Analyst | Process Engineer
 - GitHub: [github.com/robertciceroson](https://github.com/robertciceroson)
 - LinkedIn: [linkedin.com/in/robert-son-0b33b3bb](https://linkedin.com/in/robert-son-0b33b3bb)
-- Live demo (price predictor): [airbnb-price-prediction-a9hyny92wfihme4mnzkzte.streamlit.app](https://airbnb-price-prediction-a9hyny92wfihme4mnzkzte.streamlit.app)
+- Live demo: [airbnb-ai-service-tubhzkkmermmacr29pmakg.streamlit.app](https://airbnb-ai-service-tubhzkkmermmacr29pmakg.streamlit.app)
