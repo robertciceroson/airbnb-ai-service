@@ -132,7 +132,7 @@ SEASON_LABEL = {
 
 def api_predict(payload: dict) -> dict | None:
     try:
-        r = httpx.post(f"{API_BASE}/predict", json=payload, timeout=15)
+        r = httpx.post(f"{API_BASE}/predict", json=payload, timeout=60)
         r.raise_for_status()
         return r.json()
     except httpx.ConnectError:
@@ -204,7 +204,7 @@ def load_agent():
             }
             if checkin_month:
                 payload["checkin_month"] = checkin_month
-            r = httpx.post(f"{API_BASE}/predict", json=payload, timeout=15)
+            r = httpx.post(f"{API_BASE}/predict", json=payload, timeout=60)
             r.raise_for_status()
             d = r.json()
             return (
