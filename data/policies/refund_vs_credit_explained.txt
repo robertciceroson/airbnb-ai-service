@@ -1,0 +1,114 @@
+Source: Airbnb Help Center — Refunds, Credits, and Host Cancellations (Compiled Policy Reference)
+
+UNDERSTANDING AIRBNB REFUNDS vs. TRAVEL CREDIT: WHAT GUESTS NEED TO KNOW
+
+There is an important distinction between a monetary refund and an Airbnb travel credit. Guests often expect cash back but receive credit instead, which can lead to frustration, bad reviews, and unnecessary escalations. This document explains exactly when each applies.
+
+---
+
+CASH REFUND (returned to original payment method)
+
+A full cash refund — returned to the credit card, debit card, or payment method originally used — is issued in the following situations:
+
+1. HOST CANCELS THE RESERVATION
+   - If a host cancels before check-in, Airbnb issues a full cash refund to the guest's original payment method automatically.
+   - The refund typically appears within 5–15 business days depending on the guest's bank or card issuer.
+   - Airbnb may also offer the guest rebooking assistance (help finding a comparable listing), but this is separate from the refund — the guest gets their money back regardless.
+
+2. HOST CANCELS WITHIN 24 HOURS OF CHECK-IN
+   - If the host cancels within 24 hours before check-in or after the guest has already checked in, Airbnb issues a full cash refund AND a travel coupon as compensation for the disruption.
+   - This is one of the few situations where the guest receives BOTH a cash refund and a credit.
+
+3. EXTENUATING CIRCUMSTANCES (Major Disruptive Events)
+   - Under Airbnb's Major Disruptive Events Policy (formerly Extenuating Circumstances), guests may receive a full cash refund if a qualifying large-scale event (natural disaster, government travel ban, declared emergency) prevents the stay.
+   - Documentation is required. Airbnb reviews the claim before issuing the refund.
+
+4. LISTING IS SIGNIFICANTLY NOT AS DESCRIBED
+   - If the guest reports a serious issue within 72 hours of check-in (e.g., broken amenities, safety hazard, significantly different from listing photos), and Airbnb verifies the claim, a full or partial cash refund may be issued.
+   - Evidence (photos, videos, written documentation) is required.
+
+5. FLEXIBLE CANCELLATION POLICY — GUEST CANCELS
+   - If the listing has a Flexible cancellation policy and the guest cancels at least 24 hours before check-in, a full cash refund is issued.
+   - If the guest cancels less than 24 hours before check-in under a Flexible policy, the first night and service fee are non-refundable; remaining nights are refunded in cash.
+
+6. MODERATE CANCELLATION POLICY — GUEST CANCELS
+   - Full cash refund if cancelled at least 5 days before check-in.
+   - 50% refund of the nightly rate (not service fees) if cancelled less than 5 days before check-in.
+
+---
+
+AIRBNB TRAVEL CREDIT (NOT a cash refund)
+
+Airbnb travel credit is issued in the following situations — and is NOT the same as getting your money back:
+
+1. NON-REFUNDABLE RATES
+   - Some listings offer a discounted non-refundable rate. If the guest books at the non-refundable rate and then cancels for ANY reason, Airbnb does NOT issue a cash refund.
+   - Airbnb may offer a travel credit as a goodwill gesture in some cases, but this is at Airbnb's discretion and is NOT guaranteed.
+   - Travel credit can only be used for future Airbnb bookings — it cannot be withdrawn as cash.
+
+2. STRICT CANCELLATION POLICY — GUEST CANCELS
+   - Guests receive a 50% cash refund only if they cancel at least 14 days before check-in (for nights not already within the 14-day window).
+   - Cancellations within 14 days of check-in receive NO cash refund.
+   - Airbnb may offer travel credit as compensation, especially for first-time cancellations, but this varies by case.
+
+3. AIRBNB GOODWILL CREDIT
+   - In cases where neither the host nor the guest is strictly at fault, Airbnb may issue a travel credit as a courtesy resolution.
+   - This credit appears in the guest's Airbnb account and can only be used toward future bookings on the Airbnb platform.
+   - It cannot be converted to cash or transferred to another person.
+
+4. COUPON OR PROMOTIONAL CREDIT
+   - Airbnb sometimes issues promotional coupons or credits as service recovery (e.g., after a poor experience, a customer service resolution, or a technical error).
+   - These are account credits, not cash, and expire after a set period (typically 12 months).
+
+---
+
+KEY DIFFERENCES BETWEEN CASH REFUND AND TRAVEL CREDIT
+
+Cash Refund:
+- Returns money to your original payment method (credit card, bank account, PayPal, etc.)
+- Takes 5–15 business days to appear, depending on your financial institution
+- You can use the money for anything — not just Airbnb
+- Issued automatically in most host-cancellation and qualifying extenuating circumstance cases
+
+Travel Credit:
+- Stored in your Airbnb account as a balance
+- Can only be used for future Airbnb bookings
+- Cannot be withdrawn as cash
+- May expire (check the credit details in your account)
+- Often issued as a goodwill gesture or in non-refundable rate cancellation scenarios
+
+---
+
+HOST CANCELLATION — WHAT GUESTS ACTUALLY RECEIVE
+
+When a host cancels your confirmed reservation, Airbnb's policy is clear:
+- You receive a FULL CASH REFUND to your original payment method — not travel credit.
+- Airbnb may also offer rebooking assistance (help finding a comparable listing at comparable pricing), but you are not required to accept it.
+- If you rebook through Airbnb's assistance, any price difference for a more expensive listing may be covered by Airbnb, but this is handled case by case.
+
+Important: "Airbnb will help you rebook at comparable pricing" does NOT mean you forfeit your cash refund. The cash refund and rebooking assistance are two separate things.
+
+---
+
+HOW TO CHECK WHAT TYPE OF REFUND YOU'LL RECEIVE
+
+Before booking:
+- Look for the cancellation policy listed on the listing page (Flexible, Moderate, Strict, or Non-Refundable).
+- Non-Refundable listings are clearly labeled and offer a discounted price in exchange for no cash refund on cancellation.
+
+After cancellation:
+- Go to your Trips page > select the cancelled reservation > view the refund breakdown.
+- If it shows "refund to [your card]" — that is a cash refund.
+- If it shows "Airbnb credit" or "travel coupon" — that is travel credit, not cash.
+
+---
+
+ESCALATION GUIDANCE
+
+If you believe you are owed a cash refund but received travel credit instead:
+1. Contact Airbnb Support through the Resolution Center or Help Center chat.
+2. Reference the specific cancellation reason (host cancelled, extenuating circumstances, listing not as described).
+3. Provide documentation if applicable (photos, messages with the host, booking confirmation).
+4. Request a supervisor review if the first-tier agent cannot resolve it.
+
+Note: Reviews and escalations stemming from refund misunderstandings are among the most common sources of host-guest disputes. Guests who understand the refund vs. credit distinction before booking are significantly less likely to leave negative reviews or escalate to Airbnb support.
