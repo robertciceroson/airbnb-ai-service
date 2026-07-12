@@ -82,7 +82,7 @@ st.markdown("""
     button[data-baseweb="tab"] p {
         font-weight: 800 !important;
         color: #155724 !important; font-weight: 600 !important;
-        font-size: 1.1rem !important; }
+        font-size: 1.05rem !important; }
         line-height: 1.3 !important;
     }
 
