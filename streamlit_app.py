@@ -52,7 +52,7 @@ st.markdown("""
 
     /* ── Tab styling ── */
     div[data-testid="stTabs"] button {
-        font-size: 1.05rem !important;
+        font-size: 1.2rem !important;
         font-weight: 800 !important;
         padding: 10px 24px !important;
         border-radius: 6px 6px 0 0 !important;
@@ -75,7 +75,7 @@ st.markdown("""
     }
     div[data-testid="stTabs"] button p {
         font-weight: 800 !important;
-        font-size: 1.05rem !important;
+        font-size: 1.2rem !important;
     }
 
     /* Green Predict button */
