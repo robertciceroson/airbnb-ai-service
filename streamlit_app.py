@@ -52,7 +52,7 @@ st.markdown("""
 
     /* ── Tab styling ── */
     div[data-testid="stTabs"] button {
-        font-size: 1.2rem !important;
+        font-size: 1.1rem !important;
         font-weight: 800 !important;
         padding: 10px 24px !important;
         border-radius: 6px 6px 0 0 !important;
@@ -73,9 +73,17 @@ st.markdown("""
         background-color: #D4EDDA !important;
         color: #155724 !important;
     }
-    div[data-testid="stTabs"] button p {
+    /* Target every level of nesting Streamlit uses for tab label text */
+    div[data-testid="stTabs"] button p,
+    div[data-testid="stTabs"] button div,
+    div[data-testid="stTabs"] button span,
+    div[data-baseweb="tab"] p,
+    div[data-baseweb="tab"] div,
+    button[data-baseweb="tab"] p {
         font-weight: 800 !important;
-        font-size: 1.2rem !important;
+        color: #155724 !important; font-weight: 600 !important;
+        font-size: 1.1rem !important; }
+        line-height: 1.3 !important;
     }
 
     /* Green Predict button */
