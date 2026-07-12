@@ -43,12 +43,12 @@ st.markdown("""
     hr { margin: 0.5rem 0 !important; }
     div[data-testid="stMetric"] { padding: 0.3rem 0; }
 
-    /* Green date input */
-    div[data-testid="stDateInput"] input {
+    /* Green chat text input (Support Chat field) */
+    div[data-testid="stTextInput"] input {
         background-color: #D4EDDA !important; border-color: #28A745 !important;
         color: #155724 !important; font-weight: 600 !important; }
-    div[data-testid="stDateInput"] label {
-        color: #155724 !important; font-weight: 600 !important; }
+    div[data-testid="stTextInput"] input::placeholder {
+        color: #5a9070 !important; font-weight: 400 !important; }
 
     /* ── Tab styling ── */
     div[data-testid="stTabs"] button {
