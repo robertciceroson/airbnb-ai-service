@@ -229,7 +229,20 @@ Interactive API docs: [http://localhost:8000/docs](http://localhost:8000/docs)
   "sources": []
 }
 ```
+## Also Deployed On: Azure Container Apps
 
+In addition to Render and Streamlit Cloud, the FastAPI backend (Price Predictor) is independently deployed to **Azure Container Apps**, containerized with the existing Dockerfile.
+
+**Pipeline:** GitHub Actions (`docker/build-push-action`) builds the image on every push to `main` → pushes to Azure Container Registry → deployed to Azure Container Apps via the Azure CLI, with the Groq API key managed as a native Container Apps secret rather than a plaintext environment variable.
+
+**Live endpoint:** `https://airbnb-ai-service.redpebble-f00001b6.eastus.azurecontainerapps.io`
+
+```bash
+curl https://airbnb-ai-service.redpebble-f00001b6.eastus.azurecontainerapps.io/health
+# {"status":"ok","model_loaded":true,"vector_store_loaded":true,"version":"1.0.0"}
+```
+
+Workflow definition: [`.github/workflows/deploy-azure.yml`](.github/workflows/deploy-azure.yml)
 ---
 
 ## Deployment Notes
