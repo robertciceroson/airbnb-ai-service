@@ -3,6 +3,7 @@
 **A production-style AI service platform** built on top of the [Airbnb Price Prediction](https://github.com/robertciceroson/Airbnb-Price-Prediction) project — extending it from a Streamlit demo into a REST API with a multi-tool conversational AI agent for customer service.
 
 🔗 **Live demo:** [airbnb-ai-service-tubhzkkmermmacr29pmakg.streamlit.app](https://airbnb-ai-service-tubhzkkmermmacr29pmakg.streamlit.app)
+🚀 **Production deployment:** Independently deployed to **Azure Container Apps** via automated **GitHub Actions CI/CD** (build → push to Azure Container Registry → deploy) — live and continuously running, on top of the Render + Streamlit Cloud deployments below.
 
 ---
 
